@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <style>
+      nav {
+        margin: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1><%= title %></h1>
+      <nav>
+        <% nav.each do |name, url| %>
+          <a href="<%= url %>"><%= name %></a>
+        <% end %>
+      </nav>
+    </header>
+    <% works.first(10).each do |work| %>
+      <img src="<%= work.url %>" alt="<%= work.filename %>" />
+    <% end %>
+  </body>
+</html>
