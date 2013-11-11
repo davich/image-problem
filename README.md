@@ -1,4 +1,4 @@
-The RedBubble system has many digital images often taken with a camera. We have exported EXIF data from a selection of these images.
+The system has many digital images often taken with a camera. We have exported EXIF data from a selection of these images.
 Your task is to create a set of static HTML files to allow a user to browse these images.
 
 Create a batch processor that takes the input file and produces a single HTML file (based on the output template given with this test) for each camera make, camera model and also an index.
