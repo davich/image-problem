@@ -1,30 +1,39 @@
 class Nav
-  def self.index_links(makes)
+  def initialize(output_path)
+    @output_path = output_path
+  end
+  def index_links(makes)
     nav_links(makes, "makes")
   end
-  def self.make_links(models)
+  def make_links(models)
     [["Index", "../index.html"]] + nav_links(models, "../models")
   end
-  def self.model_links(make)
+  def model_links(make)
     [
       ["Index", "../index.html"],
       [make, "../makes/#{sanitize_filename(make)}.html"]
     ]
   end
-  def self.model_filename(model)
-    "output/models/#{sanitize_filename(model)}.html"
+  def make_filename(make)
+    File.join(@output_path, "makes", "#{sanitize_filename(make)}.html")
   end
-  def self.make_filename(make)
-    "output/makes/#{sanitize_filename(make)}.html"
+  def model_filename(model)
+    File.join(@output_path, "models", "#{sanitize_filename(model)}.html")
   end
-  def self.index_filename
-    "output/index.html"
+  def index_filename
+    File.join(@output_path, "index.html")
+  end
+  def create_subdirectories
+    ["makes", "models"].each do |name|
+      dir = File.join(@output_path, name)
+      Dir.mkdir(dir) unless File.directory?(dir)
+    end
   end
 private
-  def self.sanitize_filename(name)
-    name.gsub(/^.*(\\|\/)/, '').gsub(/[^0-9A-Za-z.\-]/, '_').downcase
+  def sanitize_filename(name)
+    name.downcase.gsub(/^.*(\\|\/)/, '').gsub(/[^\w\d.\-]+/, '_')
   end
-  def self.nav_links(names, path)
+  def nav_links(names, path)
     urls = names.collect {|model| "#{path}/#{sanitize_filename(model)}.html" }
     names.zip(urls).sort
   end

@@ -12,12 +12,12 @@
     <header>
       <h1><%= title %></h1>
       <nav>
-        <% nav.each do |name, url| %>
+        <% nav_links.each do |name, url| %>
           <a href="<%= url %>"><%= name %></a>
         <% end %>
       </nav>
     </header>
-    <% works.first(10).each do |work| %>
+    <% works.each do |work| %>
       <img src="<%= work.url %>" alt="<%= work.filename %>" />
     <% end %>
   </body>

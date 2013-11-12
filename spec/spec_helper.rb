@@ -1,2 +1,2 @@
-require_relative '../generate_html.rb'
+require_relative '../lib/generator.rb'
 require 'debugger'
