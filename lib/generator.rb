@@ -10,8 +10,6 @@ class Generator
   end
 
   def generate
-    @nav.create_subdirectories
-
     works = Work.from_xml(@input_filename)
     makes = works.group_by(&:make)
     makes.each do |make, works_for_make|
@@ -49,7 +47,7 @@ private
 
   def html(title, nav_links, works)
     works = works.first(10)
-    ERB.new(File.read("templates/output.html.erb")).result(binding)
+    ERB.new(File.read(File.join("templates", "output.html.erb"))).result(binding)
   end
 
   def write_file(filename, content)
