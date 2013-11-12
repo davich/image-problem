@@ -10,7 +10,12 @@ class GenerateHtml
       process_make(make, works_for_make)
     end
 
-    content = html("Index", Nav.index_links(makes.keys), works)
+    create_index_file(makes.keys, works)
+  end
+  
+private
+  def create_index_file(makes, works)
+    content = html("Index", Nav.index_links(makes), works)
     write_file(Nav.index_filename, content)
   end
 
