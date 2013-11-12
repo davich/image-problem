@@ -7,11 +7,11 @@ class Nav
     nav_links(makes, "makes")
   end
   def make_links(models)
-    [["Index", File.join("..", "index.html")]] + nav_links(models, File.join("..", "models"))
+    [index_link] + nav_links(models, File.join("..", "models"))
   end
   def model_links(make)
     [
-      ["Index", File.join("..", "index.html")],
+      index_link,
       [make, File.join("..", "makes", "#{sanitize_filename(make)}.html")]
     ]
   end
@@ -33,6 +33,9 @@ private
   end
   def sanitize_filename(name)
     name.downcase.gsub(/^.*(\\|\/)/, '').gsub(/[^\w\d.\-]+/, '_')
+  end
+  def index_link
+    ["Index", File.join("..", "index.html")]
   end
   def nav_links(names, path)
     urls = names.collect {|model| File.join(path, "#{sanitize_filename(model)}.html") }

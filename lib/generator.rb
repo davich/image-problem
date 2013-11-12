@@ -56,10 +56,10 @@ private
 
   def validate_params(input_filename, output_path)
     unless input_filename && File.exist?(input_filename)
-      raise "Input file does not exist"
+      raise "Input file does not exist: #{input_filename}"
     end
     unless output_path && File.directory?(output_path)
-      raise "Output directory does not exist"
+      raise "Output directory does not exist: #{output_path}"
     end
   end
 end
