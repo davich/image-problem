@@ -3,9 +3,10 @@ require 'nokogiri'
 class Work
   def self.from_xml(filename)
     doc = Nokogiri::XML(File.open(filename))
-    doc.search("works/work").collect do |node|
+    works = doc.search("works/work").collect do |node|
       Work.new(node)
     end
+    works.reject { |work| work.make.nil? || work.model.nil? }
   end
   def initialize(node)
     @node = node
