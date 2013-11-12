@@ -7,24 +7,30 @@ class GenerateHtml
     works = Work.from_xml(filename)
     makes = works.group_by(&:make)
     makes.each do |make, works_for_make|
-      handle_make(make, works_for_make)
+      process_make(make, works_for_make)
     end
-    write_file(Nav.index_filename, html("Index", Nav.index_nav(makes.keys), works))
+
+    content = html("Index", Nav.index_links(makes.keys), works)
+    write_file(Nav.index_filename, content)
   end
 
-  def handle_make(make, works) 
+  def process_make(make, works) 
     models = works.group_by(&:model)
     models.each do |model, works_for_model|
-      handle_model(make, model, works_for_model)
+      create_file_for_model(make, model, works_for_model)
     end
+    create_file_for_make(make, models.keys, works)
+  end
+
+  def create_file_for_make(make, models, works)
     title = "Camera Make: #{make}"
-    content = html(title, Nav.makes_nav(models.keys), works)
+    content = html(title, Nav.make_links(models), works)
     write_file(Nav.make_filename(make), content)
   end
 
-  def handle_model(make, model, works)
+  def create_file_for_model(make, model, works)
     title = "Camera Model: #{model}"
-    content = html(title, Nav.models_nav(make), works)
+    content = html(title, Nav.model_links(make), works)
     write_file(Nav.model_filename(model), content)
   end
 

@@ -1,13 +1,15 @@
 class Nav
-  def self.index_nav(makes)
-    nav(makes, "makes")
+  def self.index_links(makes)
+    nav_links(makes, "makes")
   end
-  def self.makes_nav(models)
-    [["Index", "../index.html"]] + nav(models, "../models")
+  def self.make_links(models)
+    [["Index", "../index.html"]] + nav_links(models, "../models")
   end
-  def self.models_nav(make)
-    [ ["Index", "../index.html"],
-       [make, "../makes/#{sanitize_filename(make)}.html"] ]
+  def self.model_links(make)
+    [
+      ["Index", "../index.html"],
+      [make, "../makes/#{sanitize_filename(make)}.html"]
+    ]
   end
   def self.model_filename(model)
     "output/models/#{sanitize_filename(model)}.html"
@@ -22,8 +24,8 @@ private
   def self.sanitize_filename(name)
     name.gsub(/^.*(\\|\/)/, '').gsub(/[^0-9A-Za-z.\-]/, '_').downcase
   end
-  def self.nav(names, path)
+  def self.nav_links(names, path)
     urls = names.collect {|model| "#{path}/#{sanitize_filename(model)}.html" }
-    names.zip(urls)
+    names.zip(urls).sort
   end
 end

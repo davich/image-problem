@@ -23,7 +23,5 @@ describe GenerateHtml do
       @generate_html.should_receive(:write_file).twice # make and index file
       @html = @generate_html.generate(@filename)
     end
-    it "should handle work without a make"
-    it "should handle work without a model"
   end
 end
