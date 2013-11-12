@@ -16,18 +16,18 @@ class Nav
     ]
   end
   def make_filename(make)
-    File.join(@output_path, "makes", "#{sanitize_filename(make)}.html")
+    output_file("makes", "#{sanitize_filename(make)}.html")
   end
   def model_filename(model)
-    File.join(@output_path, "models", "#{sanitize_filename(model)}.html")
+    output_file("models", "#{sanitize_filename(model)}.html")
   end
   def index_filename
-    File.join(@output_path, "index.html")
+    output_file("index.html")
   end
 private
   def create_subdirectories
     ["makes", "models"].each do |name|
-      dir = File.join(@output_path, name)
+      dir = output_file(name)
       Dir.mkdir(dir) unless File.directory?(dir)
     end
   end
@@ -37,5 +37,8 @@ private
   def nav_links(names, path)
     urls = names.collect {|model| File.join(path, "#{sanitize_filename(model)}.html") }
     names.zip(urls).sort
+  end
+  def output_file(*args)
+    File.join(*args.unshift(@output_path))
   end
 end
